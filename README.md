@@ -26,10 +26,41 @@ This produces:
 
 - build/efi/VorteX.efi
 
-## Install for rEFInd
+## Install rEFInd Boot Manager
 
+### On Windows
+To install rEFInd on a Windows machine, open **Command Prompt as Administrator** and follow these steps:
+
+1. Mount your EFI System Partition (ESP) to a temporary drive letter (e.g., `Z:`):
+   ```cmd
+   mountvol Z: /S
+   ```
+2. Download the rEFInd binary zip from the official site and extract it.
+3. Navigate into the extracted directory and copy the rEFInd files to your EFI partition:
+   ```cmd
+   xcopy /E refind Z:\EFI\refind\
+   ```
+4. Register rEFInd as the default boot entry using `bcdedit`:
+   ```cmd
+   bcdedit /set {bootmgr} path \EFI\refind\refind_x64.efi
+   ```
+
+### On Linux
+```bash
+sudo refind-install
+```
+
+## Install VorteX for rEFInd
+
+### On Windows
+Keep your Administrator Command Prompt open (with the ESP mounted as `Z:`) and run:
+```cmd
+mkdir Z:\EFI\VorteX
+copy build\efi\VorteX.efi Z:\EFI\VorteX\VorteX.efi
+```
+
+### On Linux
 Copy the generated EFI binary to a rEFInd-visible location, for example:
-
 ```bash
 mkdir -p /boot/efi/EFI/VorteX
 cp build/efi/VorteX.efi /boot/efi/EFI/VorteX/VorteX.efi
